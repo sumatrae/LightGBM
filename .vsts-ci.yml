@@ -141,7 +141,6 @@ jobs:
       Write-Host "##vso[task.setvariable variable=PATH]$env:CONDA;$env:CONDA\Scripts;$env:PATH"
       conda update -q -y conda
     displayName: "Setup and update conda"
-  python=$(PYTHON_VERSION) matplotlib nose numpy pandas psutil pytest python-graphviz scikit-learn scipy
   - powershell: $(Build.SourcesDirectory)/.ci/test_windows.ps1
     displayName: Test
   - task: PublishBuildArtifacts@1
