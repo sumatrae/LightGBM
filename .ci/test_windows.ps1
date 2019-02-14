@@ -6,6 +6,9 @@ function Check-Output {
   }
 }
 
+conda create -q -y -n $env:CONDA_ENV python=$env:PYTHON_VERSION matplotlib nose numpy pandas psutil pytest python-graphviz scikit-learn scipy
+call activate $env:CONDA_ENV
+
 if ($env:TASK -eq "regular") {
   mkdir $env:BUILD_SOURCESDIRECTORY/build; cd $env:BUILD_SOURCESDIRECTORY/build
   cmake -DCMAKE_GENERATOR_PLATFORM=x64 .. ; cmake --build . --target ALL_BUILD --config Release ; Check-Output $?
