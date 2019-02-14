@@ -7,7 +7,7 @@ function Check-Output {
 }
 
 conda create -q -y -n $env:CONDA_ENV python=$env:PYTHON_VERSION matplotlib nose numpy pandas psutil pytest python-graphviz scikit-learn scipy
-activate $env:CONDA_ENV
+conda activate $env:CONDA_ENV
 
 if ($env:TASK -eq "regular") {
   mkdir $env:BUILD_SOURCESDIRECTORY/build; cd $env:BUILD_SOURCESDIRECTORY/build
