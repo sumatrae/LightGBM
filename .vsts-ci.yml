@@ -66,7 +66,6 @@ jobs:
         PYTHON_VERSION: 3.6
   steps:
   - script: |
-      echo "##vso[task.setvariable variable=PATH]$CONDA/bin:$PATH"
       echo "##vso[task.setvariable variable=HOME_DIRECTORY]$AGENT_HOMEDIRECTORY"
       echo "##vso[task.setvariable variable=BUILD_DIRECTORY]$BUILD_SOURCESDIRECTORY"
       echo "##vso[task.setvariable variable=OS_NAME]linux"
@@ -77,6 +76,8 @@ jobs:
       LD_LIBRARY_PATH=$AMDAPPSDK_PATH/lib/x86_64:$LD_LIBRARY_PATH
       echo "##vso[task.setvariable variable=LD_LIBRARY_PATH]$LD_LIBRARY_PATH"
       echo "##vso[task.setvariable variable=OPENCL_VENDOR_PATH]$AMDAPPSDK_PATH/etc/OpenCL/vendors"
+      echo "##vso[task.setvariable variable=CONDA]$HOME_DIRECTORY/miniconda"
+      echo "##vso[task.setvariable variable=PATH]$CONDA/bin:$PATH"
     displayName: 'Set variables'
   - bash: $(Build.SourcesDirectory)/.ci/setup.sh
     displayName: Setup
@@ -102,12 +103,13 @@ jobs:
         TASK: bdist
   steps:
   - script: |
-      echo "##vso[task.setvariable variable=PATH]$CONDA/bin:$PATH"
       echo "##vso[task.setvariable variable=HOME_DIRECTORY]$AGENT_HOMEDIRECTORY"
       echo "##vso[task.setvariable variable=BUILD_DIRECTORY]$BUILD_SOURCESDIRECTORY"
       echo "##vso[task.setvariable variable=OS_NAME]macos"
       echo "##vso[task.setvariable variable=AZURE]true"
       echo "##vso[task.setvariable variable=LGB_VER]$(head -n 1 VERSION.txt)"
+      echo "##vso[task.setvariable variable=CONDA]$HOME_DIRECTORY/miniconda"
+      echo "##vso[task.setvariable variable=PATH]$CONDA/bin:$PATH"
     displayName: 'Set variables'
   - bash: $(Build.SourcesDirectory)/.ci/setup.sh
     displayName: Setup
@@ -138,7 +140,7 @@ jobs:
         PYTHON_VERSION: 3.6
   steps:
   - powershell: |
-      Write-Host "##vso[task.setvariable variable=PATH]$env:CONDA;$env:CONDA\Scripts;$env:PATH"
+      Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
       conda update -q -y conda
     displayName: "Setup and update conda"
   - powershell: $(Build.SourcesDirectory)/.ci/test_windows.ps1
