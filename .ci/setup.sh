@@ -20,9 +20,7 @@ if [[ $OS_NAME == "macos" ]]; then
     if [[ $TASK == "mpi" ]]; then
         brew install open-mpi
     fi
-    if [[ $TRAVIS == "true" ]]; then
-        wget -O conda.sh https://repo.continuum.io/miniconda/Miniconda${PYTHON_VERSION:0:1}-latest-MacOSX-x86_64.sh
-    fi
+    wget -O conda.sh https://repo.continuum.io/miniconda/Miniconda${PYTHON_VERSION:0:1}-latest-MacOSX-x86_64.sh
 else  # Linux
     if [[ $AZURE == "true" ]] && [[ $COMPILER == "clang" ]]; then
         sudo apt-get update
@@ -49,13 +47,9 @@ else  # Linux
         mv $AMDAPPSDK_PATH/lib/x86_64/sdk/* $AMDAPPSDK_PATH/lib/x86_64/
         echo libamdocl64.so > $OPENCL_VENDOR_PATH/amdocl64.icd
     fi
-    if [[ $TRAVIS == "true" ]]; then
-        wget -O conda.sh https://repo.continuum.io/miniconda/Miniconda${PYTHON_VERSION:0:1}-latest-Linux-x86_64.sh
-    fi
+    wget -O conda.sh https://repo.continuum.io/miniconda/Miniconda${PYTHON_VERSION:0:1}-latest-Linux-x86_64.sh
 fi
 
-if [[ $TRAVIS == "true" ]]; then
-    sh conda.sh -b -p $HOME_DIRECTORY/miniconda
-fi
+sh conda.sh -b -p $CONDA
 conda config --set always_yes yes --set changeps1 no
 conda update -q conda
