@@ -6,8 +6,7 @@ function Check-Output {
   }
 }
 
-conda create -q -y -n $env:CONDA_ENV python=$env:PYTHON_VERSION matplotlib nose numpy pandas psutil pytest python-graphviz scikit-learn scipy
-& "conda.bat activate $env:CONDA_ENV"
+conda install -q -y python=$env:PYTHON_VERSION matplotlib nose numpy pandas psutil pytest python-graphviz scikit-learn scipy
 
 if ($env:TASK -eq "regular") {
   mkdir $env:BUILD_SOURCESDIRECTORY/build; cd $env:BUILD_SOURCESDIRECTORY/build
@@ -41,6 +40,6 @@ if ($env:TASK -eq "regular") {
     python $file ; Check-Output $?
   }  # run all examples
   cd $env:BUILD_SOURCESDIRECTORY/examples/python-guide/notebooks
-  conda install -y -n $env:CONDA_ENV ipywidgets notebook
+  conda install -q -y ipywidgets notebook
   jupyter nbconvert --ExecutePreprocessor.timeout=180 --to notebook --execute --inplace *.ipynb ; Check-Output $?  # run all notebooks
 }
