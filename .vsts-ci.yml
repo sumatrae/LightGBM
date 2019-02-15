@@ -89,9 +89,8 @@ jobs:
         TASK: bdist
         PYTHON_VERSION: 3.6
   steps:
-  - script: |
-      echo "##vso[task.prependpath]$CONDA\Scripts"
-    displayName: "Enable conda"
+  - powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
+    displayName: Enable conda
   - script: |
       %CONDA%\Scripts\conda update -q -y conda
       conda create -q -y -n %CONDA_ENV% python=%PYTHON_VERSION% matplotlib nose numpy pandas psutil pytest python-graphviz scikit-learn scipy
