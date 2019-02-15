@@ -144,7 +144,6 @@ jobs:
   - powershell: |
       Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
       Invoke-Expression "$env:CONDA\Scripts\conda update -q -y conda"
-      Invoke-Expression "$env:CONDA\Scripts\conda init powershell"
     displayName: "Setup and update conda"
   - powershell: $(Build.SourcesDirectory)/.ci/test_windows.ps1
     displayName: Test
