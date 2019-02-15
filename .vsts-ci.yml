@@ -93,7 +93,7 @@ jobs:
       echo "##vso[task.prependpath]$CONDA\Scripts"
       %CONDA%\Scripts\conda update -q -y conda
       conda create -q -y -n %CONDA_ENV% python=%PYTHON_VERSION% matplotlib nose numpy pandas psutil pytest python-graphviz scikit-learn scipy
-      cmd /k "activate %CONDA_ENV% & powershell -ExecutionPolicy Bypass -File %BUILD_SOURCESDIRECTORY%/.ci/test_windows.ps1" 
+      cmd /c "activate %CONDA_ENV% & powershell -ExecutionPolicy Bypass -File %BUILD_SOURCESDIRECTORY%/.ci/test_windows.ps1" 
     displayName: Test
   - task: PublishBuildArtifacts@1
     condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
