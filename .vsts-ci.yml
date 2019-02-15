@@ -86,7 +86,7 @@ jobs:
     maxParallel: 3
     matrix:
       bdist:
-        TASK: bdist
+        TASK: regular
         PYTHON_VERSION: 3.6
   steps:
   - powershell: Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
