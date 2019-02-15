@@ -145,7 +145,10 @@ jobs:
       Write-Host "##vso[task.prependpath]$env:CONDA\Scripts"
       Invoke-Expression "$env:CONDA\Scripts\conda update -q -y conda"
     displayName: "Setup and update conda"
-  - script: cmd /k "activate %CONDA_ENV% & powershell -ExecutionPolicy Bypass -File %BUILD_SOURCESDIRECTORY%/.ci/test_windows.ps1"
+  - script: |
+      conda create -q -y -n %CONDA_ENV% python=%PYTHON_VERSION% matplotlib nose numpy pandas psutil pytest python-graphviz scikit-learn scipy
+      activate %CONDA_ENV%
+      powershell -ExecutionPolicy Bypass -File %BUILD_SOURCESDIRECTORY%/.ci/test_windows.ps1"
     displayName: Test
   - task: PublishBuildArtifacts@1
     condition: and(succeeded(), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/')))
